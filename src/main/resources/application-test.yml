@@ -1,0 +1,49 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  devtools:
+    add-properties: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/authentication?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:P@ssw0rd*123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_API_DOCS_ENABLED:true}
+  swagger-ui:
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED:true}
+
+open-api:
+  api-docs:
+    group: Authentication
+    title: API Authentication Platform
+    description: Documentation API Authentication Platform for Spring Boot
+    version: ${API_VERSION:v1.0.0}
+    server: http://localhost:${server.port}/api
+    license:
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0
+    contact:
+      name: VietNguyen Fullstack Developer
+      email: nguyenvanviet.150204@gmail.com
+
+jwt:
+  key:
+    directory: ${JWT_KEY_DIRECTORY:./keys}
+    private_access: ${JWT_KEY_PRIVATE_ACCESS:private_key_access.der}
+    public_access: ${JWT_KEY_PUBLIC_ACCESS:public_key_access.der}
+    private_refresh: ${JWT_KEY_PRIVATE_REFRESH:private_key_refresh.der}
+    public_refresh: ${JWT_KEY_PUBLIC_REFRESH:public_key_refresh.der}
+  expiration: ${JWT_EXPIRATION:86400000}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}

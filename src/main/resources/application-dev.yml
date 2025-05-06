@@ -1,0 +1,71 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  devtools:
+    add-properties: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/authentication?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:P@ssw0rd*123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:1081277359251-ecskk68gn6lmlvsr3vk0u1vqfjndr635.apps.googleusercontent.com}
+            client-secret: ${GOOGLE_CLIENT_SECRET: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}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:ngaymoivuivenhamoinguoi@gmail.com}
+    password: ${MAIL_PASSWORD:jttqelmawqzumtvp}
+
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_API_DOCS_ENABLED:true}
+  swagger-ui:
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED:true}
+
+open-api:
+  api-docs:
+    group: Authentication
+    title: API Authentication Platform
+    description: Documentation API Authentication Platform for Spring Boot
+    version: ${API_VERSION:v1.0.0}
+    server: http://localhost:${server.port}/api
+    license:
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0
+    contact:
+      name: VietNguyen Fullstack Developer
+      email: nguyenvanviet.150204@gmail.com
+
+jwt:
+  key:
+    directory: ${JWT_KEY_DIRECTORY:./keys}
+    private_access: ${JWT_KEY_PRIVATE_ACCESS:private_key_access.der}
+    public_access: ${JWT_KEY_PUBLIC_ACCESS:public_key_access.der}
+    private_refresh: ${JWT_KEY_PRIVATE_REFRESH:private_key_refresh.der}
+    public_refresh: ${JWT_KEY_PUBLIC_REFRESH:public_key_refresh.der}
+  expiration: ${JWT_EXPIRATION:86400000}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}

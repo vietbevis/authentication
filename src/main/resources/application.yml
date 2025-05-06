@@ -1,0 +1,36 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types:
+      - text/html
+      - text/xml
+      - text/plain
+      - text/css
+      - application/javascript
+      - application/json
+    min-response-size: 1024
+
+spring:
+  application:
+    name: Authentication
+    version: @project.version@
+  profiles:
+    active: @spring.profiles.active@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: INFO
+    web: INFO
+    org:
+      springframework:
+        web: INFO
+        security: INFO
