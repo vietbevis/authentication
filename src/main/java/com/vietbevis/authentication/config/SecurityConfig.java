@@ -47,6 +47,7 @@ public class SecurityConfig {
         "/actuator/**",
         "/error",
         "/oauth2/**",
+        "/v1/permissions/**",
     };
 
     @Bean
@@ -89,7 +90,7 @@ public class SecurityConfig {
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
- 
+
         return http.build();
     }
 

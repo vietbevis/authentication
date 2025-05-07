@@ -46,7 +46,4 @@ public class RoleEntity extends AuditEntity {
     )
     private Set<PermissionEntity> permissions = new HashSet<>();
 
-    @Builder.Default
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<UserEntity> users = new HashSet<>();
 }

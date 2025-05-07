@@ -1,8 +1,5 @@
 package com.vietbevis.authentication.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.vietbevis.authentication.common.HttpMethod;
 import com.vietbevis.authentication.entity.base.AbstractEntity;
 
@@ -10,8 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -50,8 +45,4 @@ public class PermissionEntity extends AbstractEntity {
 
     @Column(nullable = false, length = 100)
     private String resource;
-
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<RoleEntity> roles = new HashSet<>();
 }

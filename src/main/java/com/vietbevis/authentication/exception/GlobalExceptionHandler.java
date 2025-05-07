@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.vietbevis.authentication.dto.response.ApiResponse;
@@ -32,10 +33,22 @@ public class GlobalExceptionHandler {
         return ResponseUtil.notFound(ex.getMessage());
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<Object>> handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException ex) {
+        return ResponseUtil.badRequest("Lỗi tham số: " + ex.getName() + " không hợp lệ");
+    }
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiResponse<Object>> handleNotFoundException(
             NotFoundException ex) {
         return ResponseUtil.notFound(ex.getMessage());
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiResponse<Object>> handleForbiddenException(
+            ForbiddenException ex) {
+        return ResponseUtil.error(HttpStatus.FORBIDDEN.value(), ex.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -114,7 +127,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ApiResponse<Void>> handleEmailAlreadyExistsException(AlreadyExistsException ex) {
+    public ResponseEntity<ApiResponse<Void>> handleEmailAlreadyExistsException(
+            AlreadyExistsException ex) {
         log.error("Email already exists error: {}", ex.getMessage());
         return ResponseUtil.error(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
@@ -128,6 +142,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGlobalException(Exception ex) {
         log.error("Unexpected error: {}", ex.getMessage());
-        return ResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Đã xảy ra lỗi không mong muốn");
+        return ResponseUtil.error(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Đã xảy ra lỗi không mong muốn");
     }
 }

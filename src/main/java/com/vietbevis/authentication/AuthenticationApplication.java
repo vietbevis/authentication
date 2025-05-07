@@ -4,8 +4,7 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -14,10 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+@Slf4j
 @SpringBootApplication
 public class AuthenticationApplication {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationApplication.class);
 
     @Value("${spring.application.name:Authentication Service}")
     private String applicationName;
@@ -50,7 +48,7 @@ public class AuthenticationApplication {
                     ? String.join(", ", environment.getActiveProfiles())
                     : "default";
 
-                logger.info("""
+                log.info("""
                         ----------------------------------------------------------
                         ⭐ {} đã khởi động thành công! ⭐
                         ----------------------------------------------------------
@@ -76,7 +74,7 @@ public class AuthenticationApplication {
                     actuatorUrl);
 
             } catch (Exception e) {
-                logger.error("Không thể hiển thị thông tin khởi động", e);
+                log.error("Không thể hiển thị thông tin khởi động", e);
             }
         };
     }
