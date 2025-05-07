@@ -1,14 +1,7 @@
 package com.vietbevis.authentication.config;
 
-import com.vietbevis.authentication.common.HttpMethod;
-import com.vietbevis.authentication.security.JwtAccessDeniedHandler;
-import com.vietbevis.authentication.security.JwtAuthenticationEntryPoint;
-import com.vietbevis.authentication.security.JwtAuthenticationFilter;
-import com.vietbevis.authentication.security.OAuth2SuccessHandler;
-import com.vietbevis.authentication.security.PermissionAuthorizationManager;
-import com.vietbevis.authentication.security.UserDetailsServiceImpl;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +20,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.vietbevis.authentication.common.HttpMethod;
+import com.vietbevis.authentication.security.JwtAccessDeniedHandler;
+import com.vietbevis.authentication.security.JwtAuthenticationEntryPoint;
+import com.vietbevis.authentication.security.JwtAuthenticationFilter;
+import com.vietbevis.authentication.security.OAuth2SuccessHandler;
+import com.vietbevis.authentication.security.PermissionAuthorizationManager;
+import com.vietbevis.authentication.security.UserDetailsServiceImpl;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -44,10 +47,11 @@ public class SecurityConfig {
         "/swagger-ui/**",
         "/swagger-ui.html",
         "/v1/auth/**",
+            "/v1/roles/**",
+            "/v1/permissions/**",
         "/actuator/**",
         "/error",
-        "/oauth2/**",
-        "/v1/permissions/**",
+            "/oauth2/**",
     };
 
     @Bean

@@ -9,7 +9,7 @@ import com.vietbevis.authentication.dto.request.CreateAndUpdateRoleRequest;
 import com.vietbevis.authentication.dto.response.RoleResponse;
 import com.vietbevis.authentication.entity.RoleEntity;
 
-@Mapper(componentModel = "spring", uses = PermissionMapper.class)
+@Mapper(componentModel = "spring")
 public interface RoleMapper {
 
     @Mapping(target = "permissions", ignore = true)

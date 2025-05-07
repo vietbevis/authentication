@@ -14,17 +14,12 @@ import com.vietbevis.authentication.entity.VerificationCodeEntity;
 @Repository
 public interface VerificationCodeRepository extends JpaRepository<VerificationCodeEntity, Long> {
     Optional<VerificationCodeEntity> findByEmailAndCodeAndType(
-            String email,
-            String code,
-            VerificationCodeType type);
+                    String email,
+                    String code,
+                    VerificationCodeType type);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM VerificationCodeEntity v WHERE v.expiresAt < CURRENT_TIMESTAMP")
     void deleteByExpiresAtBeforeCurrentTimestamp();
-
-    void deleteByEmailAndCodeAndType(
-            String email,
-            String code,
-            VerificationCodeType type);
 }

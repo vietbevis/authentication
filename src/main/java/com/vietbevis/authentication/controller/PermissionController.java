@@ -19,6 +19,7 @@ import com.vietbevis.authentication.dto.response.ResponseUtil;
 import com.vietbevis.authentication.entity.PermissionEntity;
 import com.vietbevis.authentication.service.PermissionService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class PermissionController {
     private final PermissionService permissionService;
     private final PermissionMapper permissionMapper;
 
+    @Operation(summary = "Lấy quyền theo ID", description = "Lấy quyền theo ID")
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<PermissionResponse>> getPermissionById(
             @Valid @PathVariable("id") Long id) {
@@ -39,6 +41,7 @@ public class PermissionController {
         return ResponseUtil.success(permissionMapper.toResponse(permission));
     }
 
+    @Operation(summary = "Cập nhật quyền", description = "Cập nhật quyền")
     @PutMapping("{id}")
     public ResponseEntity<ApiResponse<PermissionResponse>> updatePermission(
             @Valid @PathVariable("id") Long id,
@@ -48,12 +51,14 @@ public class PermissionController {
                 permissionMapper.toResponse(updatedPermission));
     }
 
+    @Operation(summary = "Lấy quyền theo vai trò ID", description = "Lấy quyền theo vai trò ID")
     @GetMapping("role/{id}")
     public ResponseEntity<ApiResponse<Set<PermissionResponse>>> getPermissionsByRoleId(
             @Valid @PathVariable("id") Long id) {
         return ResponseUtil.success(permissionMapper.toResponse(permissionService.getPermissionsByRoleId(id)));
     }
 
+    @Operation(summary = "Lấy quyền theo tài nguyên", description = "Lấy quyền theo tài nguyên")
     @GetMapping("group-by-resource")
     public ResponseEntity<ApiResponse<Map<String, Set<PermissionResponse>>>> getAllPermissionGroupByResource() {
         Map<String, Set<PermissionEntity>> permissionsByResource = permissionService.getAllPermissionGroupByResource();

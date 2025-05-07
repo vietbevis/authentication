@@ -19,5 +19,5 @@ public interface PermissionRepository extends JpaRepository<PermissionEntity, Lo
     @Query("SELECT p FROM PermissionEntity p JOIN p.roles r WHERE r.id = :roleId")
     Set<PermissionEntity> findByRoleId(@Param("roleId") Long roleId);
 
-    Set<PermissionEntity> findAllById(Set<Long> permissionIds);
+    Set<PermissionEntity> findAllByIdIn(Set<Long> permissionIds);
 }

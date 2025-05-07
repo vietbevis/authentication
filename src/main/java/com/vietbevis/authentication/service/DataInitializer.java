@@ -68,7 +68,9 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void syncRoles(List<PermissionEntity> createdPermissions) {
-        List<RoleEntity> roles = roleRepository.findAll();
+        Set<RoleEntity> roles = roleRepository.findByNameIn(Arrays.stream(RoleBase.values())
+                .map(RoleBase::name)
+                .collect(Collectors.toSet()));
 
         Set<RoleEntity> missingRoles = Arrays.stream(RoleBase.values())
                 .filter(role -> !roles.stream().anyMatch(r -> r.getName().equals(role.name())))

@@ -15,10 +15,10 @@ import lombok.Getter;
 public abstract class AuditEntity extends AbstractEntity {
 
     @CreatedBy
-    @Column(name = "created_by", updatable = false)
+    @Column(name = "created_by_user_id", updatable = false)
     private Long createdBy;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
+    @Column(name = "updated_by_user_id")
     private Long updatedBy;
 }

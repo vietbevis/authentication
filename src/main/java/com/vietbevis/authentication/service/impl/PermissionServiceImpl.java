@@ -58,6 +58,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Set<PermissionEntity> getPermissionsByIds(Set<Long> permissionIds) {
-        return permissionRepository.findAllById(permissionIds);
+        return permissionRepository.findAllByIdIn(permissionIds);
     }
 }

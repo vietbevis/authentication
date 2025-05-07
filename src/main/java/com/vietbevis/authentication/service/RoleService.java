@@ -19,4 +19,16 @@ public interface RoleService {
 
     Set<RoleEntity> getRolesByUserId(Long userId);
 
+    Set<RoleEntity> getBaseRoles();
+
+    RoleEntity getRoleUser();
+
+    void addRolesToUser(Long userId, Set<Long> roleIds);
+
+    void removeRolesFromUser(Long userId, Set<Long> roleIds);
+
+    void addPermissionsToRole(Long roleId, Set<Long> permissionIds);
+
+    void removePermissionsFromRole(Long roleId, Set<Long> permissionIds);
+
 }
