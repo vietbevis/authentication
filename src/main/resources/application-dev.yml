@@ -17,6 +17,11 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    timeout: 60000
   security:
     oauth2:
       client:
@@ -69,3 +74,7 @@ jwt:
     public_refresh: ${JWT_KEY_PUBLIC_REFRESH:public_key_refresh.der}
   expiration: ${JWT_EXPIRATION:86400000}
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}
+
+otp:
+  expiration:
+    minutes: ${OTP_EXPIRATION_MINUTES:5}
