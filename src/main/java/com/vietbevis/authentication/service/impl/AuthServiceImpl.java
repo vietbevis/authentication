@@ -45,29 +45,31 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void register(RegisterRequest request) {
 
-        validateVerificationCode(request.getEmail(), request.getOtp(), VerificationCodeType.REGISTER);
+        validateVerificationCode(request.getEmail(), request.getOtp(),
+            VerificationCodeType.REGISTER);
 
         try {
 
             UserEntity newUser = UserEntity.builder()
-                    .fullName(request.getFullName())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .status(UserStatus.ACTIVE)
-                    .build();
+                .fullName(request.getFullName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .status(UserStatus.ACTIVE)
+                .build();
 
             userRepository.save(newUser);
 
             verificationCodeRepository.deleteByEmailAndCodeAndType(
-                    request.getEmail(),
-                    request.getOtp(),
-                    VerificationCodeType.REGISTER);
+                request.getEmail(),
+                request.getOtp(),
+                VerificationCodeType.REGISTER);
 
         } catch (Exception e) {
             throw new AlreadyExistsException("Email đã tồn tại.");
         }
 
-        log.info("Registration OTP sent to email: {} with code: {}", request.getEmail(), request.getOtp());
+        log.info("Registration OTP sent to email: {} with code: {}", request.getEmail(),
+            request.getOtp());
     }
 
     @Override
@@ -77,12 +79,12 @@ public class AuthServiceImpl implements AuthService {
         Optional<UserEntity> user = userRepository.findByEmail(request.getEmail());
 
         if (request.getVerificationCodeType().equals(VerificationCodeType.REGISTER.name())
-                && user.isPresent()) {
+            && user.isPresent()) {
             throw new AlreadyExistsException("Email đã tồn tại.");
         }
 
         if (request.getVerificationCodeType().equals(VerificationCodeType.FORGOT_PASSWORD.name())
-                && !user.isPresent()) {
+            && user.isEmpty()) {
             throw new NotFoundException("Email không tồn tại.");
         }
         String otp = Utils.generateRandomNumber(6);
@@ -90,11 +92,12 @@ public class AuthServiceImpl implements AuthService {
         try {
 
             VerificationCodeEntity verificationCode = VerificationCodeEntity.builder()
-                    .code(otp)
-                    .email(request.getEmail())
-                    .type(VerificationCodeType.REGISTER)
-                    .expiresAt(Date.from(Instant.now().plus(OTP_EXPIRATION_MINUTES, ChronoUnit.MINUTES)))
-                    .build();
+                .code(otp)
+                .email(request.getEmail())
+                .type(VerificationCodeType.REGISTER)
+                .expiresAt(
+                    Date.from(Instant.now().plus(OTP_EXPIRATION_MINUTES, ChronoUnit.MINUTES)))
+                .build();
 
             verificationCodeRepository.save(verificationCode);
             verificationCodeRepository.deleteByExpiresAtBeforeCurrentTimestamp();
@@ -109,7 +112,7 @@ public class AuthServiceImpl implements AuthService {
 
     private void validateVerificationCode(String email, String code, VerificationCodeType type) {
         Optional<VerificationCodeEntity> verificationCode = verificationCodeRepository
-                .findByEmailAndCodeAndType(email, code, type);
+            .findByEmailAndCodeAndType(email, code, type);
 
         if (verificationCode.isEmpty()) {
             throw new BadRequestException("Mã OTP không hợp lệ");
