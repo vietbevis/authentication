@@ -100,11 +100,10 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
             verificationCodeRepository.save(verificationCode);
-            verificationCodeRepository.deleteByExpiresAtBeforeCurrentTimestamp();
 
         } catch (Exception e) {
             log.error("Lỗi tạo mã OTP: {}", e.getMessage());
-            throw new BadRequestException("Gửi OTP email thất bại");
+            throw new AlreadyExistsException("Đã gửi mã OTP đến email.");
         }
 
         emailService.sendOTPEmail(request.getEmail(), "bạn", otp);
@@ -115,10 +114,11 @@ public class AuthServiceImpl implements AuthService {
             .findByEmailAndCodeAndType(email, code, type);
 
         if (verificationCode.isEmpty()) {
-            throw new BadRequestException("Mã OTP không hợp lệ");
+            throw new BadRequestException("Mã OTP không hợp lệ.");
         }
         if (verificationCode.get().getExpiresAt().before(new Date())) {
-            throw new BadRequestException("Mã OTP đã hết hạn");
+            verificationCodeRepository.deleteByEmailAndCodeAndType(email, code, type);
+            throw new BadRequestException("Mã OTP đã hết hạn.");
         }
     }
 }

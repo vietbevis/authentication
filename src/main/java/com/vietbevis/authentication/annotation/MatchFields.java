@@ -1,5 +1,6 @@
 package com.vietbevis.authentication.annotation;
 
+import com.vietbevis.authentication.validator.MatchValidator;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,9 +22,9 @@ public @interface MatchFields {
 
     Class<? extends Payload>[] payload() default {};
 
-    String password();
+    String primaryField();
 
-    String confirmPassword();
+    String confirmationField();
 
-    String fieldError();
+    String errorFieldName();
 } 

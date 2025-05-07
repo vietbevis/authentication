@@ -11,9 +11,9 @@ import lombok.Getter;
 
 @Getter
 @MatchFields(
-    password = "password",
-    confirmPassword = "confirmPassword",
-    fieldError = "confirmPassword",
+    primaryField = "password",
+    confirmationField = "confirmPassword",
+    errorFieldName = "confirmPassword",
     message = "Mật khẩu xác nhận không khớp với mật khẩu đã nhập"
 )
 public class RegisterRequest {
@@ -33,7 +33,7 @@ public class RegisterRequest {
     @NotBlank(message = "Mật khẩu không được để trống")
     private String confirmPassword;
 
-    @NotBlank(message = "OTP không được để trống")
+    @NotNull(message = "OTP không được để trống")
     @Size(min = 6, max = 6, message = "OTP phải có 6 ký tự")
     private String otp;
 

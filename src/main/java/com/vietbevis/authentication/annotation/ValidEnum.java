@@ -1,5 +1,6 @@
 package com.vietbevis.authentication.annotation;
 
+import com.vietbevis.authentication.validator.EnumValidator;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
